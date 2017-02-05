@@ -1,4 +1,4 @@
-version: '1'
+version: '2'
 
 services:
     mysql:
@@ -20,21 +20,21 @@ services:
             - 80:80
         restart: always
         volumes:
-            - ./nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
-            - ~/www/events-api:/var/www/html
+            - ./docker/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+            - ./:/var/www/html
         links:
             - php
         depends_on:
             - php
 
     php:
-        build: php
+        build: docker/php
         expose:
             - 9000
         restart: always
         volumes:
-            - ./php/conf/php.ini:/usr/local/etc/php/conf.d/custom.ini
-            - ~/www/events-api:/var/www/html
+            - ./docker/php/conf/php.ini:/usr/local/etc/php/conf.d/custom.ini
+            - ./:/var/www/html
         links:
             - mysql
         environment:
