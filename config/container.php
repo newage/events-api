@@ -11,6 +11,19 @@ $container = $builder->newInstance();
 
 // Inject config
 $container->set('config', $config);
+$container->set(
+    Common\Container\ConfigInterface::class,
+    $container->lazyNew(Common\Container\Config::class, [$config])
+);
+
+$container->set(Common\Container\Version::class, $container->lazyNew(Common\Container\Version::class));
+$container->set(
+    Common\Action\VersionMiddleware::class,
+    $container->lazyNew(
+        Common\Action\VersionMiddleware::class,
+        [$container->lazyGet(\Common\Container\Version::class)]
+    )
+);
 
 // Inject factories
 foreach ($config['dependencies']['factories'] as $name => $object) {
