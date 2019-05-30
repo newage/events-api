@@ -16,7 +16,7 @@ build: ## Build project
 	docker-compose build
 
 init: ## Init project. Install composer
-	docker exec -it $(PROJECT_NAME)_php composer install
+	docker exec -it events_php composer install
 	cp ../.env.example ../.env
 
 up: ## Start docker containers
@@ -32,4 +32,4 @@ start: ## Start existing containers
 	docker-compose start
 
 console: ## Connect to container
-	docker exec -it $(PROJECT_NAME)_php bash
+	docker exec -it events_php bash
